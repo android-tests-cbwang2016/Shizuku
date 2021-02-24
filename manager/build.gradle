@@ -27,18 +27,18 @@ android {
         prefab true
     }
     signingConfigs {
-        sign
+        //sign
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.sign
         }
-        release {
-            signingConfig signingConfigs.sign
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+        //release {
+        //    signingConfig signingConfigs.sign
+        //    minifyEnabled true
+        //    shrinkResources true
+        //    proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        //}
     }
     externalNativeBuild {
         cmake {
