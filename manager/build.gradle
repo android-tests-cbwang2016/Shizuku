@@ -30,9 +30,9 @@ android {
         //sign
     }
     buildTypes {
-        debug {
-            signingConfig signingConfigs.sign
-        }
+        //debug {
+        //    signingConfig signingConfigs.sign
+        //}
         //release {
         //    signingConfig signingConfigs.sign
         //    minifyEnabled true
