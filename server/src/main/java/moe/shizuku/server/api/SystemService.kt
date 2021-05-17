@@ -3,6 +3,7 @@ package moe.shizuku.server.api
 import android.app.IActivityManager
 import android.app.IProcessObserver
 import android.app.IUidObserver
+import android.content.Context
 import android.content.IContentProvider
 import android.content.Intent
 import android.content.pm.*
@@ -19,6 +20,11 @@ import moe.shizuku.server.utils.OsUtils
 import java.util.*
 
 object SystemService {
+
+    /*
+     * Cannot replace these hardcoded service names to Context.class's **_SERVICE fields!
+     * "server" module depends on "hidden-api-common" module, which has Context class stub.
+     */
 
     private val activityManagerBinder by lazy {
         SystemServiceBinder<IActivityManager>("activity") {
