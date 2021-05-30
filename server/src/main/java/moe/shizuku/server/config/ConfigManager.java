@@ -123,7 +123,9 @@ public class ConfigManager {
         }
 
         for (Config.PackageEntry entry : new ArrayList<>(config.packages)) {
-            if (entry.packages == null) continue;
+            if (entry.packages == null) {
+                entry.packages = new ArrayList<>();
+            }
 
             List<String> packages = SystemService.getPackagesForUidNoThrow(entry.uid);
             if (packages.isEmpty()) {
@@ -167,7 +169,10 @@ public class ConfigManager {
                     continue;
                 }
 
-                updateLocked(uid, null, Config.MASK_PERMISSION, allowed ? Config.FLAG_ALLOWED : 0);
+                List<String> packages = new ArrayList<>();
+                packages.add(pi.packageName);
+
+                updateLocked(uid, packages, Config.MASK_PERMISSION, allowed ? Config.FLAG_ALLOWED : 0);
                 changed = true;
             }
         }
@@ -217,7 +222,7 @@ public class ConfigManager {
             entry.flags = newValue;
         }
         if (packages != null) {
-            entry.packages = new ArrayList<>(packages);
+            entry.packages.addAll(packages);
         }
         scheduleWriteLocked();
     }

@@ -35,12 +35,6 @@ import moe.shizuku.manager.ShizukuSettings.NIGHT_MODE as KEY_NIGHT_MODE
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
-    companion object {
-        init {
-            SimpleMenuPreference.setLightFixEnabled(true)
-        }
-    }
-
     private lateinit var languagePreference: ListPreference
     private lateinit var nightModePreference: IntegerSimpleMenuPreference
     private lateinit var blackNightThemePreference: SwitchPreference
@@ -125,11 +119,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
             true
         }
-        blackNightThemePreference.isChecked = ThemeHelper.isBlackNightTheme(context)
-        if (nightModePreference.value == DayNightDelegate.MODE_NIGHT_NO) blackNightThemePreference.isEnabled = false
-        blackNightThemePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, _: Any? ->
-            if (ResourceUtils.isNightMode(requireContext().resources.configuration)) activity?.recreate()
-            true
+        if (ResourceUtils.isNightMode(context.resources.configuration)) {
+            blackNightThemePreference.isChecked = ThemeHelper.isBlackNightTheme(context)
+            blackNightThemePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, _: Any? ->
+                activity?.recreate()
+                true
+            }
+        } else {
+            blackNightThemePreference.isVisible = false
         }
 
         translationPreference.summary = context.getString(R.string.settings_translation_summary, context.getString(R.string.app_name))
